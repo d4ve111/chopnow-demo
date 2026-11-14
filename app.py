@@ -104,12 +104,12 @@ def track_order(order_id):
     if order_id in orders:
         return jsonify(orders[order_id])
     return jsonify({"error": "Order ID not found"}), 404
+@app.route("/")
+def index():
+    return send_from_directory(".", "index.html")
+@app.route("/<path:path>")
+def static_files(path):
+    return send_from_directory (".", path)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-    @app.route("/")
-    def index():
-        return send_from_directory(".", "index.html")
-    @app.route("/path:path>")
-    def static_files(path):
-        return send_from_directory(".", path)
