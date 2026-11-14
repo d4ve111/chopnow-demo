@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import os
 import random
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
@@ -107,3 +107,9 @@ def track_order(order_id):
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+    @app.route("/")
+    def index():
+        return send_from_directory(".", "index.html")
+    @app.route("/path:path>")
+    def static_files(path):
+        return send_from_directory(".", path)
